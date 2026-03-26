@@ -1,0 +1,82 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="bg-[#FFFDF7] min-h-screen py-10">
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    {% for item in page_obj %}
+    <div class="flex justify-between items-center bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+
+      <div class="flex items-center gap-5">
+
+        <!-- FOOD IMAGE -->
+        <img src="{{ item.food_image }}"
+        alt="{{ item.food_name }}"
+        class="w-32 h-32 object-cover rounded-md border"
+        onerror="this.src='https://metropizza.com.au/wp-content/uploads/2023/06/food-placeholder.jpeg'">
+
+        <!-- FOOD INFO -->
+        <div>
+
+          <!-- RESTAURANT NAME (UPLOADER) -->
+          <h1 class="text-lg font-bold text-slate-800">
+            {{ item.user_name.username }}
+          </h1>
+
+          <!-- FOOD NAME -->
+          <h2 class="font-semibold text-slate-700">
+            {{ item.food_name }}
+          </h2>
+
+          <!-- DESCRIPTION -->
+          <p class="text-sm text-slate-500">
+            {{ item.food_desc }}
+          </p>
+
+          <!-- PRICE -->
+          <p class="font-semibold text-emerald-600">
+            ₹ {{ item.food_price }}
+          </p>
+
+        </div>
+      </div>
+
+      <!-- DETAILS BUTTON -->
+      <a href="{% url 'myapp:detail' item.id %}"
+         class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+        View Details
+      </a>
+
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+<!-- PAGINATION -->
+
+<div class="flex justify-center items-center gap-3 mt-8 text-sm">
+
+{% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}"
+class="px-3 py-1 border rounded-md hover:bg-gray-100">
+Prev
+</a>
+{% endif %}
+
+<span class="px-3 py-1 text-gray-600">
+{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+</span>
+
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}"
+class="px-3 py-1 border rounded-md hover:bg-gray-100">
+Next
+</a>
+{% endif %}
+
+</div>
+
+{% endblock %}

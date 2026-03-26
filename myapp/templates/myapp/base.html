@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<style>input, textarea {
+    border: 1px solid black;
+    width: 100%;
+    padding: 4px;
+    background-color: white;
+  }</style>
+<body class="bg-blue-50">
+    <nav class='bg-sky-500/75 text-white'>
+        <div class='flex justify-between px-2 py-4'>
+            <a href="{% url "myapp:index" %}" class='font-bold text-3xl'>Food App</a>
+        <div class='space-x-6'>
+            <a class="text-xl" href="{% url 'users:profile' %}">Welcome {{user.username}}!</a>
+        {% if user.is_authenticated %}
+            <a class="text-xl" href="{% url 'myapp:create_item' %}">Add Item</a>
+            <a class="text-xl" href="{% url 'users:logout' %}">Logout</a>
+        {% else %}
+            <a class="text-xl" href="{% url 'users:login' %}">Login</a>
+            <a class="text-xl" href="{% url 'users:register' %}">Register</a>
+        {% endif %}
+        </div>
+    </nav>
+    {% if messages %}
+        {% for message in messages %}
+        <div class='bg-green-400 text-green-700 text-center flex justify-center m-3 text-xl'>
+            {{message}}
+
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% block body %}
+    {% endblock %}
+</body>
+</html>

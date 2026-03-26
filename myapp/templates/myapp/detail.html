@@ -1,0 +1,42 @@
+{% extends 'myapp/base.html' %}
+{% block body %}
+
+<div class="bg-[#FFFDF7] min-h-screen py-6">
+  <div class="max-w-2xl mx-auto bg-white border border-slate-200 rounded-xl p-4 shadow-md flex flex-col md:flex-row gap-4">
+
+    <!-- Image -->
+    <div class="md:w-1/2">
+      <img src="{{ item.food_image }}" 
+           alt="{{ item.food_name }}" 
+           class="w-full h-40 md:h-full object-cover rounded-md border">
+    </div>
+
+    <!-- Details -->
+    <div class="md:w-1/2 flex flex-col justify-between">
+      <div>
+        <h1 class="text-xl font-bold text-slate-800 mb-1">{{ item.food_name }}</h1>
+        <p class="text-sm text-slate-500 mb-3">{{ item.food_desc }}</p>
+      </div>
+      <div class="flex items-center gap-2 mt-2">
+        <p class="text-lg font-semibold text-emerald-600">₹ {{ item.food_price }}</p>
+        <a href="{% url "myapp:index" %}" 
+           class="bg-blue-600 text-white px-3 py-1 rounded-md text-sm">
+          Back
+        </a>
+        {% if item.user_name == request.user %}
+          <a href="{% url 'myapp:edit' item.id %}" 
+            class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">
+            Edit
+          </a>
+          <a href="{% url "myapp:delete" item.id %}" 
+            class="bg-red-600 text-white px-3 py-1 rounded-md text-sm">
+            Delete
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

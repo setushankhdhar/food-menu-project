@@ -1,0 +1,58 @@
+{% extends "myapp/base.html" %}
+{% load static %}
+
+{% block body %}
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+
+    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-center">
+
+        <!-- Profile Image -->
+        <div class="flex justify-center">
+            {% if user.profile.image %}
+<img
+src="{{ user.profile.image.url }}"
+alt="{{ user.username }}"
+class="w-32 h-32 rounded-full object-cover border-4 border-indigo-500"
+>
+{% else %}
+<img
+src="/pictures/profile_pictures/default.jpg"
+alt="default profile"
+class="w-32 h-32 rounded-full object-cover border-4 border-indigo-500"
+>
+{% endif %}
+        </div>
+
+        <!-- Username -->
+        <h2 class="mt-4 text-2xl font-bold text-gray-800">
+            {{ user.username }}
+        </h2>
+
+        <!-- Location -->
+        {% if user.profile.location %}
+            <p class="mt-2 text-gray-500">
+                📍 {{ user.profile.location }}
+            </p>
+        {% else %}
+            <p class="mt-2 text-gray-400 italic">
+                Location not added
+            </p>
+        {% endif %}
+
+        <!-- Divider -->
+        <hr class="my-6">
+
+        <!-- Actions -->
+        <div class="flex justify-center space-x-4">
+            <a href="#" class="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition">
+                Edit Profile
+            </a>
+            <a href="#" class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition">
+                Change Photo
+            </a>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
